@@ -1,0 +1,156 @@
+.truck-item {
+  position: relative;
+  border: 3px solid #000;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+
+  &__priority-number {
+    position: absolute;
+    left: 0;
+    top: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    width: 30px;
+    height: 30px;
+    font-weight: 700;
+    font-size: inherit;
+    background-color: #fff;
+    transform: translateY(-60%);
+  }
+
+  &__header {
+    margin-bottom: 40px;
+
+    @include tablet {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &__truck-number {
+    margin-bottom: 10px;
+
+    @include tablet {
+      margin-bottom: 0;
+    }
+  }
+
+  &__driver {
+    margin-bottom: 10px;
+
+    @include tablet {
+      margin-bottom: 0;
+    }
+  }
+
+  &__products {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+
+    th {
+      border: 1px solid #ddd;
+      padding: 5px;
+      font-weight: bold;
+      background: #efefef;
+    }
+
+    td {
+      border: 1px solid #ddd;
+      padding: 5px;
+    }
+  }
+
+  &__select-side {
+    outline: none;
+    border: 1px solid #000;
+    border-radius: 6px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      border: 1px solid #1026a1;
+    }
+
+    @include tablet {
+      margin-left: 6px;
+    }
+  }
+
+  &__box-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__products-name {
+    text-transform: uppercase;
+  }
+
+  &__status {
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    padding: 4px 16px;
+    font-weight: 700;
+
+    &--city {
+      background-color: #fff;
+    }
+
+    &--kpp {
+      background-color: rgb(211 204 204);
+    }
+
+    &--parking {
+      background-color: rgb(160 233 50);
+    }
+
+    &--loading {
+      background-color: #fac712;
+    }
+
+    &--loaded {
+      background-color: #f14725;
+    }
+
+    @include tablet {
+      margin-bottom: 0;
+    }
+  }
+
+  &__update-input {
+    margin-bottom: 20px;
+    border: 1px solid #000;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: initial;
+    font-size: inherit;
+  }
+
+  &__close {
+    margin-right: 6px;
+  }
+
+  @include tablet {
+    font-size: 18px;
+  }
+
+  @include tablet-xl {
+    font-size: 20px;
+  }
+
+  @include desktop {
+    font-size: 24px;
+  }
+}

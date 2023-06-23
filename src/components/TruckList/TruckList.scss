@@ -1,0 +1,35 @@
+.truck-list {
+  @include reset-list;
+
+  text-align: center;
+
+  &__item {
+    & + & {
+      margin-top: 20px;
+    }
+  }
+
+  &__loaded {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6px;
+    width: 100%;
+    font-size: inherit;
+    color: #000;
+    background-color: rgb(160 233 50);
+  }
+
+  &__delete {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6px;
+    width: 100%;
+    font-size: inherit;
+    color: #000;
+    background-color: $error-color;
+  }
+}
