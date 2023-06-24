@@ -23,6 +23,7 @@
     "./.eslintrc.json",
     "cypress",
     "global-types.d.ts",
+    "packages.d.ts",
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 } 

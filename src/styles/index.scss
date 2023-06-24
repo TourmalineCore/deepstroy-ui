@@ -7,6 +7,7 @@
 // pages
 @import "../pages/auth/components/LoginForm/LoginForm";
 @import "../pages/auth/LoginPage";
+@import "../pages/Forecast/Forecast";
 
 // components
 @import "../components/ActionsBlock/ActionsBlock";
@@ -17,6 +18,7 @@
 @import "../components/ThemeColorPicker/ThemeColorPicker";
 @import "../components/TruckList/TruckList";
 @import "../components/TruckList/TruckItem/TruckItem";
+@import "../components/Input/Input";
 
 // template
 @import "../template/components/Breadcrumbs/Breadcrumbs";

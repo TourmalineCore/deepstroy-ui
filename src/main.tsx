@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import 'react-swipeable-list/dist/styles.css';
+import '@tourmalinecore/react-table-responsive/es/index.css';
+
 import './styles/index.scss';
 
 import { App } from './App';

@@ -1,0 +1,43 @@
+.forecast {
+  &__title {
+    margin-bottom: 20px;
+  }
+
+  &__button {
+    margin-top: 10px;
+
+    & + & {
+      margin-left: 10px;
+    }
+  }
+
+  &__input {
+    & + & {
+      margin-top: 20px;
+    }
+  }
+
+  &__download {
+    color: inherit;
+    opacity: 0.5;
+    pointer-events: none;
+
+    a {
+      font-family: inherit;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    &--active {
+      pointer-events: all;
+    }
+  }
+
+  &__history {
+    margin-top: 20px;
+
+    h3 {
+      margin-bottom: 10px;
+    }
+  }
+}
