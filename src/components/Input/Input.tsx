@@ -1,16 +1,16 @@
 import clsx from 'clsx';
-import React, { DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { DetailedHTMLProps, InputHTMLAttributes, forwardRef } from 'react';
 
 interface InputType extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   label?: string;
+  invalid?: boolean;
 }
 
-function Input({
-  label,
-  id,
-  className,
-  ...props
-}: InputType) {
+const Input = forwardRef<HTMLInputElement, InputType>((props: InputType, ref) => {
+  const {
+    label, id, className, invalid, ...otherProps
+  } = props;
+
   return (
     <div className={clsx(`input`, className)}>
       {label && (
@@ -22,12 +22,15 @@ function Input({
         </label>
       )}
       <input
+        ref={ref}
         id={id}
-        className={clsx(`input__control`)}
-        {...props}
+        className={clsx(`input__control`, {
+          'input__control--invalid': invalid,
+        })}
+        {...otherProps}
       />
     </div>
   );
-}
+});
 
 export default Input;

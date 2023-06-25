@@ -1,18 +1,18 @@
-import { faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import Forecast from './Forecast';
 
-export const planRoutes = [
+export const forecastRoutes = [
   {
-    path: `/plan`,
+    path: `/forecast`,
     breadcrumb: `Планирование проекта`,
     Component: Forecast,
   },
 ];
 
-export const planSidebarRoutes = [
+export const forecastSidebarRoutes = [
   {
-    path: `/plan`,
+    path: `/forecast`,
     label: `Планирование`,
-    icon: faTruckFast,
+    icon: faFolder,
   },
 ];

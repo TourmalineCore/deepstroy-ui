@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import 'react-swipeable-list/dist/styles.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-toastify/ReactToastify.min.css';
 import '@tourmalinecore/react-table-responsive/es/index.css';
+import '@tourmalinecore/react-tc-modal/es/index.css';
 
 import './styles/index.scss';
 
+import { ToastContainer } from 'react-toastify';
 import { App } from './App';
 import { ThemeProvider } from './theme/themeContext';
 
@@ -24,6 +27,9 @@ ReactDOM.createRoot(document.getElementById(`root`) as HTMLElement).render(
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <App />
+      <ToastContainer
+        newestOnTop
+      />
     </ThemeProvider>
   </QueryClientProvider>
   // </React.StrictMode>

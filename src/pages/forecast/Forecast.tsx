@@ -1,11 +1,11 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { ClientTable } from '@tourmalinecore/react-table-responsive';
 import { ChangeEvent, useEffect, useState } from 'react';
-import clsx from 'clsx';
+import moment from 'moment';
+import { toast } from 'react-toastify';
 import Input from "../../components/Input/Input";
 import { api } from '../../common/api';
-
-const RELOAD_INTERVAL_MS = 5000;
 
 type HistoryUploadFiles = Array<{
   dateOfUpload: string | Date;
@@ -15,9 +15,7 @@ type HistoryUploadFiles = Array<{
 
 function Forecast() {
   const [isFileUpload, setIsFileUpload] = useState(false);
-  const [idFile, setIdFile] = useState<null | number>(null);
   const [historyData, setHistoryData] = useState<HistoryUploadFiles>([]);
-  const [pathForFile, setPathForFile] = useState(``);
 
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const [isLoadingUploadFile, setIsLoadingUploadFile] = useState(false);
@@ -35,19 +33,36 @@ function Forecast() {
       Header: `Дата`,
       accessor: `dateOfUpload`,
       disableFilters: true,
-      disableSortBy: true,
+      Cell: ({ row }: any) => (
+        <div>{moment(row.original.dateOfUpload).format(`DD-MM-YYYY`)}</div>
+      ),
     },
     {
       Header: `Имя файла`,
       accessor: `fileName`,
       disableFilters: true,
-      disableSortBy: true,
     },
     {
       Header: `Файл`,
       accessor: `path`,
       disableFilters: true,
       disableSortBy: true,
+      Cell: ({ row }: any) => (
+        <a
+          href={row.original.path}
+          download
+          style={{
+            color: `#fff`,
+            cursor: `pointer`,
+            border: `1px solid #e2e2e2`,
+            padding: 6,
+            background: `#5d35ff`,
+            borderRadius: 6,
+          }}
+        >
+          Получить результат
+        </a>
+      ),
     },
   ];
 
@@ -56,17 +71,9 @@ function Forecast() {
   }, []);
 
   useEffect(() => {
-    let interval: NodeJS.Timer | null = null;
-
     if (isFileUpload) {
-      interval = setInterval(async () => {
-        await Promise.all([downloadFile()]);
-      }, RELOAD_INTERVAL_MS);
+      getHistoryUpload();
     }
-
-    return () => {
-      clearInterval(interval!);
-    };
   }, [isFileUpload]);
 
   return (
@@ -81,6 +88,7 @@ function Forecast() {
         className="forecast__input"
         label="Имя файла"
         type="text"
+        placeholder="Имя файла"
         onChange={(event: ChangeEvent<HTMLInputElement>) => setFormData({
           ...formData,
           name: event.target.value,
@@ -90,6 +98,7 @@ function Forecast() {
       <Input
         className="forecast__input"
         type="file"
+        accept=".xlsx"
         onChange={(event: ChangeEvent<HTMLInputElement>) => setFormData({
           ...formData,
           file: event.target.files,
@@ -99,29 +108,12 @@ function Forecast() {
       <button
         type="button"
         className="forecast__button"
-        disabled={formData.file === null || isLoadingUploadFile}
+        disabled={!(formData.file !== null && formData.name.length > 1) || isLoadingUploadFile}
         onClick={() => {
           uploadFile();
         }}
       >
         {!isLoadingUploadFile ? `Отправить фаил` : `Отправяем...`}
-      </button>
-
-      <button
-        type="button"
-        disabled={idFile === null}
-        className={clsx(`forecast__button forecast__download`, {
-          'forecast__download--active': idFile,
-        })}
-      >
-        <a
-          href={pathForFile}
-          download
-          target="_blank"
-          rel="noreferrer"
-        >
-          Получить результат
-        </a>
       </button>
 
       <div className="forecast__history">
@@ -146,17 +138,17 @@ function Forecast() {
   );
 
   async function uploadFile() {
-    setIsFileUpload(true);
     setIsLoadingUploadFile(true);
 
     try {
-      const { data } = await api.post<number>(`/forecast/upload-file/${formData.name}`, {
-        file: formData.file,
-      });
+      // @ts-ignore
+      await api.post(`/forecast/upload-file/${formData.name}`, formData.file[0]);
 
-      setIdFile(data);
+      toast.success(`Фаил отправлен, скоро появится в таблице`);
+      setIsFileUpload(true);
     } catch {
       alert(`Error`);
+      toast.error(`Произошла ошибка, попробуйте еще раз чуть-чуть позже`);
       setIsFileUpload(false);
     } finally {
       setIsLoadingUploadFile(false);
@@ -173,12 +165,6 @@ function Forecast() {
     } finally {
       setIsLoadingHistory(false);
     }
-  }
-
-  async function downloadFile() {
-    const { data } = await api.get<{ path: string }>(`/forecast/download-file/${idFile}`);
-
-    setPathForFile(data.path);
   }
 }
 

@@ -12,5 +12,9 @@
     min-height: 42px;
     color: #000;
     cursor: pointer;
+
+    &--invalid {
+      border: 1px solid #ff2020;
+    }
   }
 }
